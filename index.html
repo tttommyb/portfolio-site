@@ -83,22 +83,35 @@
 
         .card-buttons {
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
+            justify-content: flex-start;
             padding: 0 15px 15px;
         }
 
             .card-buttons a {
-                padding: 10px 20px;
-                background: #333;
-                color: white;
-                text-decoration: none;
+                padding: 8px 16px;
                 border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+                color: #fff;
                 transition: background 0.3s;
             }
 
-                .card-buttons a:hover {
-                    background: #555;
+                .card-buttons a:first-child {
+                    background: #4caf50; /* Green for Play */
                 }
+
+                    .card-buttons a:first-child:hover {
+                        background: #43a047;
+                    }
+
+                .card-buttons a:last-child {
+                    background: #2196f3; /* Blue for Code */
+                }
+
+                    .card-buttons a:last-child:hover {
+                        background: #1976d2;
+                    }
 
         footer {
             text-align: center;
@@ -176,7 +189,7 @@
                 <p>${p.description}</p>
               </div>
               <div class="card-buttons">
-                <a href="${p.playLink}" target="_blank">Play</a>
+                <a href="${p.playLink}" target="_blank"">Play</a>
                 <a href="${p.codeLink}" target="_blank">Code</a>
               </div>`;
 
