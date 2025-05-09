@@ -1,0 +1,7 @@
+{
+  "title": "Pong",
+  "description": "An SFML remake of the classic pong game with an AI system",
+  "image": "images/galactic-defender.png",
+  "playLink": "https://example.com/play",
+  "codeLink": "https://github.com/yourusername/galactic-defender"
+}

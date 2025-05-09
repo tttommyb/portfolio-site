@@ -1,0 +1,7 @@
+{
+  "title": "Galactic Defender",
+  "description": "A roguelike space shooter with procedurally generated levels.",
+  "image": "images/galactic-defender.png",
+  "playLink": "https://example.com/play",
+  "codeLink": "https://github.com/yourusername/galactic-defender"
+}
