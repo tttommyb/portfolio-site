@@ -2,7 +2,7 @@
   "title": "Space Invaders!",
   "description": "An SFML remake of the classic Space Invaders",
   "image": "images/space-invaders.png",
-  "playLink": "https://example.com/play",
-  "codeLink": "https://github.com/yourusername/galactic-defender"
+  "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
+  "codeLink": "https://github.com/tttommyb/Pong"
   "tags": ["SFML", "C++", "First Year Project"]
 }

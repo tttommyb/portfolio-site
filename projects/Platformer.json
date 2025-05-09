@@ -2,7 +2,7 @@
   "title": "Platformer",
   "description": "A side-scrolling platformer made in SFML",
   "image": "images/platformer.png",
-  "playLink": "https://example.com/play",
-  "codeLink": "https://github.com/yourusername/galactic-defender"
+  "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
+  "codeLink": "https://github.com/tttommyb/Pong"
   "tags": ["SFML", "C++", "First Year Project"]
 }

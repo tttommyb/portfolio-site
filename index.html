@@ -31,10 +31,6 @@
       margin: auto;
     }
 
-    <label for="tagFilter">Filter by tag:</label>
-<select id="tagFilter">
-  <option value="all">All</option>
-</select>
 
     .projects-grid {
       display: grid;
@@ -102,8 +98,13 @@
   </header>
 
   <section class="section" id="projects">
-    <h2>Projects</h2>
-    <div class="projects-grid" id="projectContainer"></div>
+      <h2>Projects</h2>
+
+      <label for="tagFilter">Filter by tag:</label>
+      <select id="tagFilter">
+          <option value="all">All</option>
+      </select>
+      <div class="projects-grid" id="projectContainer"></div>
   </section>
 
   <footer>
