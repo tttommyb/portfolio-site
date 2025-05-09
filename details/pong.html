@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Details</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #121212; color: #f4f4f4; }
+
+    /* ─── Top Bar ─── */
+    header {
+      background: #1e1e1e;
+      padding: 10px 20px;
+      width: fit-content;
+      margin: 20px auto 40px;
+      border-radius: 8px;
+    }
+    header h1 { font-size: 1.5rem; }
+
+    /* ─── Carousel ─── */
+    .carousel {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+    .slides img,
+    .slides video {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .carousel button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(30,30,30,0.7);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: 0 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .carousel button.prev { left: 10px; }
+    .carousel button.next { right: 10px; }
+
+    /* ─── Info Box ─── */
+    .info-box {
+      background: #1e1e1e;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 20px;
+    }
+    .info-header {
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .info-header h2 { font-size: 1.8rem; margin-bottom: 4px; }
+    .info-header time { font-size: 0.9rem; color: #aaa; }
+
+    .section {
+      margin-bottom: 20px;
+    }
+    .section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    .section p,
+    .section ul {
+      line-height: 1.5;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar with name -->
+  <header>
+    <h1>Thomas Bushnell</h1>
+  </header>
+
+  <!-- Carousel gallery -->
+  <div class="carousel">
+    <div class="slides" id="slides">
+      <!-- Replace src with your image/video files -->
+      <img src="../images/pong/menu.png" alt="The Main Menu">
+     
+      <img src="../images/pong/game.png" alt="In Game">
+
+      <!-- add more <img> or <video> as needed -->
+    </div>
+    <button class="prev" id="prevBtn">&#10094;</button>
+    <button class="next" id="nextBtn">&#10095;</button>
+  </div>
+
+  <!-- Info box -->
+  <div class="info-box">
+    <div class="info-header">
+      <h2>Pong</h2>
+      <time datetime="2024-12">December 2024</time>
+    </div>
+
+    <div class="section" id="description">
+      <h3>Description</h3>
+      <p>
+        <!-- Your project description here -->
+        This project is a fast-paced 2D platformer where players navigate procedurally generated levels, 
+        overcome obstacles, and battle unique bosses to save the kingdom.
+      </p>
+    </div>
+
+    <div class="section" id="skills">
+      <h3>Skills</h3>
+      <ul>
+        <!-- List key skills/technologies -->
+        <li>C++ &amp; SFML for core engine</li>
+        <li>Custom shader programming</li>
+        <li>Procedural level generation algorithms</li>
+        <li>Git for version control</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Basic carousel functionality
+    const slides = document.getElementById('slides');
+    const total = slides.children.length;
+    let index = 0;
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      index = (index + 1) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      index = (index - 1 + total) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    });
+  </script>
+
+</body>
+</html>
