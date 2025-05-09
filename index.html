@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Programmer Portfolio</title>
+    <title>Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,10 +123,11 @@
 <body>
 
     <header>
-        <h1>Your Name</h1>
+        <h1>Thomas Bushnell</h1>
         <p>Game Programmer Portfolio</p>
         <nav>
             <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
         </nav>
     </header>
 
@@ -138,6 +139,17 @@
             <option value="all">All</option>
         </select>
 
+        <div class="projects-grid" id="projectContainer"></div>
+    </section>
+    <section class="section" id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <a>C++</a>
+            <a>C#</a>
+            <a>Unreal</a>
+            <a>Unity</a>
+        </ul>
+      
         <div class="projects-grid" id="projectContainer"></div>
     </section>
 
@@ -183,15 +195,15 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-              <img src="${p.image}" alt="${p.title}">
-              <div class="card-body">
-                <h3>${p.title}</h3>
-                <p>${p.description}</p>
-              </div>
-              <div class="card-buttons">
-                <a href="${p.playLink}" target="_blank"">Play</a>
-                <a href="${p.codeLink}" target="_blank">Code</a>
-              </div>`;
+                  <img src="${p.image}" alt="${p.title}">
+                  <div class="card-body">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                  </div>
+                  <div class="card-buttons">
+                    <a href="${p.playLink}" target="_blank"">Play</a>
+                    <a href="${p.codeLink}" target="_blank">Code</a>
+                  </div>`;
 
                 // click to go to detail page
                 card.addEventListener('click', () => {

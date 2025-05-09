@@ -4,6 +4,6 @@
   "image": "images/space-invaders/game.png",
   "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
   "codeLink": "https://github.com/tttommyb/Pong",
-  "tags": ["SFML", "c#", "First Year Project"],
+  "tags": ["SFML", "C++", "First Year Project"],
   "detailLink": "details/space-invaders.html"
 }
