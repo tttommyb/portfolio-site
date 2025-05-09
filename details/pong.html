@@ -94,25 +94,10 @@
 
   <!-- Top bar with name (full-width) -->
   <header>
-    <h1>Your Name</h1>
+    <h1>Thomas Bushnell</h1>
   </header>
 
-  <!-- Carousel with side buttons -->
-  <div class="carousel-wrapper">
-    <button id="prevBtn">&#10094;</button>
-    <div class="carousel">
-      <div class="slides" id="slides">
-        <!-- Replace these with your own media -->
-        <img src="../images/pong/menu.png" alt="The Main Menu">
-        <img src="../images/pong/game.png" alt="The Game">
-        <video src="../videos/pong/demo.mp4" autoplay muted loop playsinline></video>
-      </div>
-    </div>
-    <button id="nextBtn">&#10095;</button>
-  </div>
-
-	
-<button id="backMainBtn" style="
+    <button id="backMainBtn" style="
   background:#333;
   color:#f4f4f4;
   border:none;
@@ -124,32 +109,61 @@
   ← Back 
 </button>
 
+  <!-- Carousel with side buttons -->
+  <div class="carousel-wrapper">
+    <button id="prevBtn">&#10094;</button>
+    <div class="carousel">
+      <div class="slides" id="slides">
+        <!-- Replace these with your own media -->
+        <img src="../images/pong/menu.png" alt="The Main Menu">
+        <img src="../images/pong/game.png" alt="The Game">
+        <video src="../videos/pong/demo.mp4" autoplay muted loop playsinline controls></video>
+      </div>
+    </div>
+    <button id="nextBtn">&#10095;</button>
+  </div>
+
+	
+
+
   <!-- Info box -->
   <div class="info-box">
-    <div class="info-header">
-      <h2>Pong</h2>
-      <time datetime="2024-12">December 2024</time>
-    </div>
+      <div class="info-header">
+          <h2>Pong</h2>
+          <time datetime="2024-12">December 2024</time>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <a href="https://github.com/tttommyb/Pong/releases/tag/V1.0" target="_blank" style="text-decoration: none;">
+              <button style="background:#4caf50; color:#fff; border:none; padding:8px 16px; border-radius:5px; cursor:pointer;">
+                  ▶ Play
+              </button>
+          </a>
+          <a href="https://github.com/tttommyb/Pong" target="_blank" style="text-decoration: none;">
+              <button style="background:#2196f3; color:#fff; border:none; padding:8px 16px; border-radius:5px; cursor:pointer;">
+                  Code
+              </button>
+          </a>
+      </div>
 
-    <div class="section" id="description">
-      <h3>Description</h3>
-      <p>
-        <!-- Your project description here -->
-        This project is a fast-paced 2D platformer where players navigate procedurally generated levels, 
-        overcome obstacles, and battle unique bosses to save the kingdom.
-      </p>
-    </div>
+      <div class="section" id="description">
+          <h3>Description</h3>
+          <p>
+              <!-- Your project description here -->
+              This project is a fast-paced 2D platformer where players navigate procedurally generated levels,
+              overcome obstacles, and battle unique bosses to save the kingdom.
+          </p>
+      </div>
 
-    <div class="section" id="skills">
-      <h3>Skills</h3>
-      <ul>
-        <!-- List key skills/technologies -->
-        <li>C++ &amp; SFML for core engine</li>
-        <li>Custom shader programming</li>
-        <li>Procedural level generation algorithms</li>
-        <li>Git for version control</li>
-      </ul>
-    </div>
+      <div class="section" id="skills">
+          <h3>Skills</h3>
+          <ul>
+              <!-- List key skills/technologies -->
+              <li>C++ &amp; SFML for core engine</li>
+              <li>Custom shader programming</li>
+              <li>Procedural level generation algorithms</li>
+              <li>Git for version control</li>
+          </ul>
+      </div>
   </div>
 
   <script>
