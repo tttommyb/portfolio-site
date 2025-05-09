@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Details</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #121212; color: #f4f4f4; }
+
+    /* ─── Top Bar (full-width) ─── */
+    header {
+      background: #1e1e1e;
+      padding: 10px 20px;
+      width: 100%;
+      text-align: center;
+    }
+    header h1 { font-size: 1.5rem; }
+
+    /* ─── Carousel Wrapper ─── */
+    .carousel-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+    .carousel {
+      overflow: hidden;
+      flex: 1;
+      border-radius: 10px;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+    .slides img,
+    .slides video {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .carousel-wrapper button {
+      background: rgba(30,30,30,0.7);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 0 10px;
+      transition: background 0.3s;
+    }
+    .carousel-wrapper button:hover {
+      background: rgba(30,30,30,0.9);
+    }
+
+    /* ─── Info Box ─── */
+    .info-box {
+      background: #1e1e1e;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 20px;
+    }
+
+      .info-buttons {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+      }
+
+          .info-buttons a {
+              padding: 8px 16px;
+              border-radius: 5px;
+              text-decoration: none;
+              font-weight: bold;
+              color: #fff;
+              transition: background 0.3s;
+          }
+
+              .info-buttons a:first-child {
+                  background: #4caf50; /* Green for Play */
+              }
+
+                  .info-buttons a:first-child:hover {
+                      background: #43a047;
+                  }
+
+              .info-buttons a:last-child {
+                  background: #2196f3; /* Blue for Code */
+              }
+
+                  .info-buttons a:last-child:hover {
+                      background: #1976d2;
+                  }
+
+
+    .info-header {
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .info-header h2 { font-size: 1.8rem; margin-bottom: 4px; }
+    .info-header time { font-size: 0.9rem; color: #aaa; }
+
+    .section {
+      margin-bottom: 20px;
+    }
+    .section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    .section p,
+    .section ul {
+      line-height: 1.5;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar with name (full-width) -->
+  <header>
+    <h1>Thomas Bushnell</h1>
+  </header>
+
+    <button id="backMainBtn" style="
+  background:#333;
+  color:#f4f4f4;
+  border:none;
+  padding:8px 16px;
+  border-radius:5px;
+  cursor:pointer;
+  margin: 20px;
+">
+  ← Back 
+</button>
+
+  <!-- Carousel with side buttons -->
+  <div class="carousel-wrapper">
+    <button id="prevBtn">&#10094;</button>
+    <div class="carousel">
+      <div class="slides" id="slides">
+        <!-- Replace these with your own media -->
+        <video src="../videos/space-invaders/demo.mp4" autoplay muted loop playsinline controls></video>
+        <img src="../images/space-invaders/game.png" alt="The Game">
+        <img src="../images/space-invaders/menu.png" alt="The Main Menu">
+      </div>
+    </div>
+    <button id="nextBtn">&#10095;</button>
+  </div>
+
+	
+
+
+  <!-- Info box -->
+  <div class="info-box">
+      <div class="info-header">
+          <h2>Space Invaders!</h2>
+          <time datetime="2025-03">March 2025</time>
+          <div class="info-buttons">
+              <a href="https://github.com/tttommyb/Pong/releases/tag/V1.0" target="_blank">Play</a>
+              <a href="https://github.com/tttommyb/Pong" target="_blank">Code</a>
+          </div>
+      </div>
+
+
+      <div class="section" id="description">
+          <h3>Description</h3>
+          <p>
+              <!-- Your project description here -->
+              This project is a fast-paced 2D platformer where players navigate procedurally generated levels,
+              overcome obstacles, and battle unique bosses to save the kingdom.
+          </p>
+      </div>
+
+      <div class="section" id="skills">
+          <h3>Skills</h3>
+          <ul>
+              <!-- List key skills/technologies -->
+              <li>C++ &amp; SFML for core engine</li>
+              <li>Custom shader programming</li>
+              <li>Procedural level generation algorithms</li>
+              <li>Git for version control</li>
+          </ul>
+      </div>
+  </div>
+
+  <script>
+    // Carousel functionality
+    const slides = document.getElementById('slides');
+    const total = slides.children.length;
+    let index = 0;
+
+    document.getElementById('backMainBtn').addEventListener('click', () => {
+    // Adjust the path as needed if your details pages are nested in a folder
+    window.location.href = '../index.html';
+  });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      index = (index + 1) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      index = (index - 1 + total) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    });
+  </script>
+
+</body>
+</html>
