@@ -3,6 +3,6 @@
   "description": "An SFML remake of the classic pong game with an AI system",
   "image": "images/pong.png",
   "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
-  "codeLink": "https://github.com/tttommyb/Pong"
+  "codeLink": "https://github.com/tttommyb/Pong",
   "tags": ["SFML", "C++", "First Year Project"]
 }
