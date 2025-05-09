@@ -31,6 +31,11 @@
       margin: auto;
     }
 
+    <label for="tagFilter">Filter by tag:</label>
+<select id="tagFilter">
+  <option value="all">All</option>
+</select>
+
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -105,34 +110,66 @@
     <p>&copy; 2025 Your Name</p>
   </footer>
 
-  <script>
-    async function loadProjects() {
-      const projectFiles = ['project1.json']; // List each project JSON here manually for now
-      const container = document.getElementById('projectContainer');
+ <script>
+  const projectFiles = ['project1.json']; // Add more files as needed
+  let allProjects = [];
 
-      for (const file of projectFiles) {
-        const res = await fetch('projects/' + file);
-        const project = await res.json();
+  async function loadProjects() {
+    const container = document.getElementById('projectContainer');
+    const tagSelect = document.getElementById('tagFilter');
+    const tagSet = new Set();
 
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${project.image}" alt="${project.title}">
-          <div class="card-body">
-            <h3>${project.title}</h3>
-            <p>${project.description}</p>
-          </div>
-          <div class="card-buttons">
-            <a href="${project.playLink}" target="_blank">Play</a>
-            <a href="${project.codeLink}" target="_blank">Code</a>
-          </div>
-        `;
-        container.appendChild(card);
+    for (const file of projectFiles) {
+      const res = await fetch('projects/' + file);
+      const project = await res.json();
+      allProjects.push(project);
+      if (project.tags) {
+        project.tags.forEach(tag => tagSet.add(tag));
       }
     }
 
-    loadProjects();
-  </script>
+    tagSet.forEach(tag => {
+      const option = document.createElement('option');
+      option.value = tag;
+      option.textContent = tag;
+      tagSelect.appendChild(option);
+    });
+
+    tagSelect.addEventListener('change', () => {
+      displayProjects(tagSelect.value);
+    });
+
+    displayProjects("all");
+  }
+
+  function displayProjects(filterTag) {
+    const container = document.getElementById('projectContainer');
+    container.innerHTML = "";
+
+    const filtered = filterTag === "all"
+      ? allProjects
+      : allProjects.filter(p => p.tags && p.tags.includes(filterTag));
+
+    filtered.forEach(project => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${project.image}" alt="${project.title}">
+        <div class="card-body">
+          <h3>${project.title}</h3>
+          <p>${project.description}</p>
+        </div>
+        <div class="card-buttons">
+          <a href="${project.playLink}" target="_blank">Play</a>
+          <a href="${project.codeLink}" target="_blank">Code</a>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  loadProjects();
+</script>
 
 </body>
 </html>

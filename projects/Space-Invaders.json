@@ -4,4 +4,5 @@
   "image": "images/space-invaders.png",
   "playLink": "https://example.com/play",
   "codeLink": "https://github.com/yourusername/galactic-defender"
+  "tags": ["SFML", "C++", "First Year Project"]
 }
