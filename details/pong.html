@@ -66,6 +66,39 @@
       margin: 0 auto 60px;
       padding: 20px;
     }
+
+      .info-buttons {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+      }
+
+          .info-buttons a {
+              padding: 8px 16px;
+              border-radius: 5px;
+              text-decoration: none;
+              font-weight: bold;
+              color: #fff;
+              transition: background 0.3s;
+          }
+
+              .info-buttons a:first-child {
+                  background: #4caf50; /* Green for Play */
+              }
+
+                  .info-buttons a:first-child:hover {
+                      background: #43a047;
+                  }
+
+              .info-buttons a:last-child {
+                  background: #2196f3; /* Blue for Code */
+              }
+
+                  .info-buttons a:last-child:hover {
+                      background: #1976d2;
+                  }
+
+
     .info-header {
       border-bottom: 1px solid #333;
       margin-bottom: 20px;
@@ -131,19 +164,12 @@
       <div class="info-header">
           <h2>Pong</h2>
           <time datetime="2024-12">December 2024</time>
+          <div class="info-buttons">
+              <a href="https://github.com/tttommyb/Pong/releases/tag/V1.0" target="_blank">Play</a>
+              <a href="https://github.com/tttommyb/Pong" target="_blank">Code</a>
+          </div>
       </div>
-      <div style="display: flex; gap: 10px; margin-top: 10px;">
-          <a href="https://github.com/tttommyb/Pong/releases/tag/V1.0" target="_blank" style="text-decoration: none;">
-              <button style="background:#4caf50; color:#fff; border:none; padding:8px 16px; border-radius:5px; cursor:pointer;">
-                  ▶ Play
-              </button>
-          </a>
-          <a href="https://github.com/tttommyb/Pong" target="_blank" style="text-decoration: none;">
-              <button style="background:#2196f3; color:#fff; border:none; padding:8px 16px; border-radius:5px; cursor:pointer;">
-                  Code
-              </button>
-          </a>
-      </div>
+
 
       <div class="section" id="description">
           <h3>Description</h3>
