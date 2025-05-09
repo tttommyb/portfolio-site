@@ -1,7 +1,7 @@
 {
   "title": "M&M: The Chocolate Chain",
   "description": "A Local Multiplayer Co-Op based on the M&M brand",
-  "image": "images/mm_cc/game.png",
+  "image": "images/mm_cc/thumbnail.png",
   "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
   "codeLink": "https://github.com/tttommyb/Pong",
   "tags": ["Unity", "C#", "First Year Project"],
