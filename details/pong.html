@@ -112,8 +112,7 @@
   </div>
 
 	
-<!-- Back Button -->
-<button id="backBtn" style="
+<button id="backMainBtn" style="
   background:#333;
   color:#f4f4f4;
   border:none;
@@ -122,7 +121,7 @@
   cursor:pointer;
   margin: 20px;
 ">
-  ← Back
+  ← Back 
 </button>
 
   <!-- Info box -->
@@ -160,9 +159,9 @@
     let index = 0;
 
     document.getElementById('backMainBtn').addEventListener('click', () => {
-     // Adjust the path as needed if your details pages are nested in a folder
+    // Adjust the path as needed if your details pages are nested in a folder
     window.location.href = '../index.html';
-    });
+  });
 
     document.getElementById('nextBtn').addEventListener('click', () => {
       index = (index + 1) % total;
