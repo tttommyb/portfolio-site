@@ -73,3 +73,66 @@
       text-decoration: none;
       border-radius: 5px;
       transition: background 0.3s;
+    }
+
+    .card-buttons a:hover {
+      background: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Your Name</h1>
+    <p>Game Programmer Portfolio</p>
+    <nav>
+      <a href="#projects">Projects</a>
+    </nav>
+  </header>
+
+  <section class="section" id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid" id="projectContainer"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Your Name</p>
+  </footer>
+
+  <script>
+    async function loadProjects() {
+      const projectFiles = ['project1.json']; // List each project JSON here manually for now
+      const container = document.getElementById('projectContainer');
+
+      for (const file of projectFiles) {
+        const res = await fetch('projects/' + file);
+        const project = await res.json();
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${project.image}" alt="${project.title}">
+          <div class="card-body">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+          </div>
+          <div class="card-buttons">
+            <a href="${project.playLink}" target="_blank">Play</a>
+            <a href="${project.codeLink}" target="_blank">Code</a>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    }
+
+    loadProjects();
+  </script>
+
+</body>
+</html>
