@@ -1,7 +1,7 @@
 {
   "title": "Platformer",
   "description": "A side-scrolling platformer made in SFML",
-  "image": "images/platformer.png",
+  "image": "images/platformer/level1.png",
   "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
   "codeLink": "https://github.com/tttommyb/Pong",
   "tags": ["SFML", "C++", "First Year Project"],
