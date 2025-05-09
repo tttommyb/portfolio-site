@@ -9,23 +9,27 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #121212; color: #f4f4f4; }
 
-    /* ─── Top Bar ─── */
+    /* ─── Top Bar (full-width) ─── */
     header {
       background: #1e1e1e;
       padding: 10px 20px;
-      width: fit-content;
-      margin: 20px auto 40px;
-      border-radius: 8px;
+      width: 100%;
+      text-align: center;
     }
     header h1 { font-size: 1.5rem; }
 
-    /* ─── Carousel ─── */
-    .carousel {
-      position: relative;
+    /* ─── Carousel Wrapper ─── */
+    .carousel-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 90%;
       max-width: 800px;
       margin: 0 auto 40px;
+    }
+    .carousel {
       overflow: hidden;
+      flex: 1;
       border-radius: 10px;
     }
     .slides {
@@ -38,20 +42,20 @@
       flex-shrink: 0;
       object-fit: cover;
     }
-    .carousel button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+    .carousel-wrapper button {
       background: rgba(30,30,30,0.7);
       border: none;
       color: #fff;
       font-size: 2rem;
-      padding: 0 12px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 4px;
+      margin: 0 10px;
+      transition: background 0.3s;
     }
-    .carousel button.prev { left: 10px; }
-    .carousel button.next { right: 10px; }
+    .carousel-wrapper button:hover {
+      background: rgba(30,30,30,0.9);
+    }
 
     /* ─── Info Box ─── */
     .info-box {
@@ -88,24 +92,38 @@
 </head>
 <body>
 
-  <!-- Top bar with name -->
+  <!-- Top bar with name (full-width) -->
   <header>
-    <h1>Thomas Bushnell</h1>
+    <h1>Your Name</h1>
   </header>
 
-  <!-- Carousel gallery -->
-  <div class="carousel">
-    <div class="slides" id="slides">
-      <!-- Replace src with your image/video files -->
-      <img src="../images/pong/menu.png" alt="The Main Menu">
-     
-      <img src="../images/pong/game.png" alt="In Game">
-
-      <!-- add more <img> or <video> as needed -->
+  <!-- Carousel with side buttons -->
+  <div class="carousel-wrapper">
+    <button id="prevBtn">&#10094;</button>
+    <div class="carousel">
+      <div class="slides" id="slides">
+        <!-- Replace these with your own media -->
+        <img src="../images/pong/menu.png" alt="The Main Menu">
+        <img src="../images/pong/game.png" alt="The Game">
+        <video src="../videos/pong/demo.mp4" Demo Video></video>
+      </div>
     </div>
-    <button class="prev" id="prevBtn">&#10094;</button>
-    <button class="next" id="nextBtn">&#10095;</button>
+    <button id="nextBtn">&#10095;</button>
   </div>
+
+	
+<!-- Back Button -->
+<button id="backBtn" style="
+  background:#333;
+  color:#f4f4f4;
+  border:none;
+  padding:8px 16px;
+  border-radius:5px;
+  cursor:pointer;
+  margin: 20px;
+">
+  ← Back
+</button>
 
   <!-- Info box -->
   <div class="info-box">
@@ -136,10 +154,15 @@
   </div>
 
   <script>
-    // Basic carousel functionality
+    // Carousel functionality
     const slides = document.getElementById('slides');
     const total = slides.children.length;
     let index = 0;
+
+    document.getElementById('backMainBtn').addEventListener('click', () => {
+     // Adjust the path as needed if your details pages are nested in a folder
+    window.location.href = '/index.html';
+    });
 
     document.getElementById('nextBtn').addEventListener('click', () => {
       index = (index + 1) % total;
