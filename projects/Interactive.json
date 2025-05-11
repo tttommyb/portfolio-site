@@ -1,0 +1,9 @@
+{
+  "title": "Interactive Enivronment",
+  "description": "A small interactive environment crafted in Unity based on a painting by Alfred Hair  ",
+  "image": "images/interactive/beach.png",
+  "playLink": "https://example.com/play",
+  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "tags": ["Unity", "C#", "First Year Project", "Maya"],
+  "detailLink": "details/interactive.html"
+}
