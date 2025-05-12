@@ -122,6 +122,55 @@
                         background: #1976d2;
                     }
 
+
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 20px;
+        }
+
+            .carousel .card {
+                flex: 0 0 300px;
+                transform: scale(0.8);
+                opacity: 0.6;
+                transition: transform 0.3s, opacity 0.3s;
+            }
+
+                .carousel .card.active {
+                    transform: scale(1.1);
+                    opacity: 1;
+                }
+
+        #carousel-prev,
+        #carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            background: none;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #carousel-prev {
+            left: 0;
+        }
+
+        #carousel-next {
+            right: 0;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
@@ -141,6 +190,15 @@
             <a style="font-weight:900" href="#about">About Me</a>
         </nav>
     </header>
+
+    <section class="section" id="highlights">
+        <h2>Highlights</h2>
+        <div class="carousel-container">
+            <button id="carousel-prev">&#10094;</button>
+            <div class="carousel" id="highlightCarousel"></div>
+            <button id="carousel-next">&#10095;</button>
+        </div>
+    </section>
 
     <section class="section" id="projects">
         <h2>Projects</h2>
@@ -171,7 +229,7 @@
                 <i class="devicon-github-plain"></i>
             </li>
         </ul>
-      
+
         <div class="projects-grid" id="projectContainer"></div>
     </section>
 
@@ -216,6 +274,48 @@
             });
             tagSelect.addEventListener('change', () => display(tagSelect.value));
             display('all');
+            const featuredProjects = allProjects.filter(p => p.featured);
+            if (featuredProjects.length > 0) {
+                displayCarousel(featuredProjects);
+            }
+        }
+
+        function displayCarousel(featuredProjects) {
+            const carousel = document.getElementById('highlightCarousel');
+            let currentIndex = 0;
+
+            function render() {
+                carousel.innerHTML = '';
+                featuredProjects.forEach((p, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'card' + (i === currentIndex ? ' active' : '');
+                    card.innerHTML = `
+                <img src="${p.image}" alt="${p.title}">
+                <div class="card-body">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                </div>`;
+                    card.addEventListener('click', () => {
+                        if (p.detailLink) location.href = p.detailLink;
+                    });
+                    carousel.appendChild(card);
+                });
+
+                // Scroll to center
+                carousel.style.transform = `translateX(calc(50% - ${(currentIndex + 0.5) * 320}px))`;
+            }
+
+            document.getElementById('carousel-prev').onclick = () => {
+                currentIndex = (currentIndex - 1 + featuredProjects.length) % featuredProjects.length;
+                render();
+            };
+
+            document.getElementById('carousel-next').onclick = () => {
+                currentIndex = (currentIndex + 1) % featuredProjects.length;
+                render();
+            };
+
+            render();
         }
 
         function display(filterTag) {
@@ -229,15 +329,15 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                  <img src="${p.image}" alt="${p.title}">
-                  <div class="card-body">
-                    <h3>${p.title}</h3>
-                    <p>${p.description}</p>
-                  </div>
-                  <div class="card-buttons">
-                    <a href="${p.playLink}" target="_blank"">Play</a>
-                    <a href="${p.codeLink}" target="_blank">Code</a>
-                  </div>`;
+                      <img src="${p.image}" alt="${p.title}">
+                      <div class="card-body">
+                        <h3>${p.title}</h3>
+                        <p>${p.description}</p>
+                      </div>
+                      <div class="card-buttons">
+                        <a href="${p.playLink}" target="_blank"">Play</a>
+                        <a href="${p.codeLink}" target="_blank">Code</a>
+                      </div>`;
 
                 // click to go to detail page
                 card.addEventListener('click', () => {
