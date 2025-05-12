@@ -5,7 +5,7 @@
   "playLink": "https://example.com/play",
   "codeLink": "https://github.com/yourusername/galactic-defender",
   "tags": ["SFML", "C++", "First Year Project"],
-  "detailLink": "details/whack-a-mole.html"
+  "detailLink": "details/whack-a-mole.html",
   "featured": false
 }
 
