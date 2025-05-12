@@ -230,7 +230,6 @@
             </li>
         </ul>
 
-        <div class="projects-grid" id="projectContainer"></div>
     </section>
 
     <section class="section" id="experience">
@@ -274,6 +273,7 @@
             });
             tagSelect.addEventListener('change', () => display(tagSelect.value));
             display('all');
+
             const featuredProjects = allProjects.filter(p => p.featured);
             if (featuredProjects.length > 0) {
                 displayCarousel(featuredProjects);
@@ -302,7 +302,7 @@
                 });
 
                 // Scroll to center
-                carousel.style.transform = `translateX(calc(50% - ${(currentIndex + 0.5) * 320}px))`;
+                carousel.children[currentIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             }
 
             document.getElementById('carousel-prev').onclick = () => {
