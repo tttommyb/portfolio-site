@@ -130,12 +130,14 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 40px;
+            width: 100%;
         }
 
         .carousel {
             display: flex;
-            transition: transform 0.5s ease;
             gap: 20px;
+            transition: transform 0.5s ease;
+            will-change: transform;
         }
 
             .carousel .card {
@@ -149,6 +151,7 @@
                     transform: scale(1.1);
                     opacity: 1;
                 }
+
 
         #carousel-prev,
         #carousel-next {
@@ -296,44 +299,69 @@
             const carousel = document.getElementById('highlightCarousel');
             let currentIndex = 0;
 
-            // Initial render
-            featuredProjects.forEach((p, i) => {
-                const card = document.createElement('div');
-                card.className = 'card' + (i === currentIndex ? ' active' : '');
-                card.innerHTML = `
-            <img src="${p.image}" alt="${p.title}">
-            <div class="card-body">
-                <h3>${p.title}</h3>
-                <p>${p.description}</p>
-            </div>`;
-                card.addEventListener('click', () => {
-                    if (p.detailLink) location.href = p.detailLink;
-                });
-                carousel.appendChild(card);
-            });
+            function render() {
+                const total = featuredProjects.length;
 
-            function updateCarousel() {
-                const cards = carousel.children;
-                for (let i = 0; i < cards.length; i++) {
-                    cards[i].classList.remove('active');
-                }
-                cards[currentIndex].classList.add('active');
-                const offset = -currentIndex * 320; // 300px card + 20px gap
+                // Clear old content
+                carousel.innerHTML = '';
+
+                // Create card elements
+                featuredProjects.forEach((p, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                <img src="${p.image}" alt="${p.title}">
+                <div class="card-body">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                </div>
+            `;
+                    card.addEventListener('click', () => {
+                        if (p.detailLink) location.href = p.detailLink;
+                    });
+                    carousel.appendChild(card);
+                });
+
+                updateCarouselPosition();
+            }
+
+            function updateCarouselPosition() {
+                const cards = carousel.querySelectorAll('.card');
+                cards.forEach((card, i) => {
+                    card.classList.remove('active');
+                    card.style.transform = '';
+                    card.style.opacity = '0.6';
+                    card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                });
+
+                const total = cards.length;
+                const centerIndex = currentIndex % total;
+
+                // Apply transform to slide to current index
+                const offset = -centerIndex * 320; // 300px card + 20px gap
                 carousel.style.transform = `translateX(${offset}px)`;
+
+                // Mark the active card
+                const activeCard = cards[centerIndex];
+                if (activeCard) {
+                    activeCard.classList.add('active');
+                    activeCard.style.opacity = '1';
+                }
             }
 
             document.getElementById('carousel-prev').onclick = () => {
                 currentIndex = (currentIndex - 1 + featuredProjects.length) % featuredProjects.length;
-                updateCarousel();
+                updateCarouselPosition();
             };
 
             document.getElementById('carousel-next').onclick = () => {
                 currentIndex = (currentIndex + 1) % featuredProjects.length;
-                updateCarousel();
+                updateCarouselPosition();
             };
 
-            updateCarousel();
+            render();
         }
+
 
 
         function display(filterTag) {
