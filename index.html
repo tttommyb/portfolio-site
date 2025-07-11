@@ -387,6 +387,9 @@
                 // Highlight the center card
                 const cards = track.querySelectorAll('.card');
                 cards.forEach(card => card.classList.remove('active'));
+                // The 'active' card should be the one in the middle of the *visible* window.
+                // If visibleCards is 3, the middle card is at index 1 relative to the start of the visible window.
+                // So, the actual index in the `cards` array would be `currentIndex`.
                 const centerCard = cards[currentIndex];
                 if (centerCard) centerCard.classList.add('active');
             }
