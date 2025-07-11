@@ -31,7 +31,7 @@
             list-style-type: none; /* Remove bullets */
             padding: 0; /* Remove padding */
             margin: 0; /* Remove margins */
-            font-size:60px
+            font-size: 60px
         }
 
         .section {
@@ -122,7 +122,6 @@
                         background: #1976d2;
                     }
 
-
         .carousel-container {
             display: flex;
             align-items: center;
@@ -155,7 +154,6 @@
                     opacity: 1;
                     transform: scale(1.1);
                 }
-
 
         #carousel-prev,
         #carousel-next {
@@ -202,7 +200,9 @@
         <h2>Highlights</h2>
         <div class="carousel-container">
             <button id="carousel-prev">&#10094;</button>
-            <div class="carousel" id="highlightCarousel"></div>
+            <div class="carousel-track-wrapper">
+                <div class="carousel-track" id="highlightCarouselTrack"></div>
+            </div>
             <button id="carousel-next">&#10095;</button>
         </div>
     </section>
@@ -285,40 +285,59 @@
             if (featuredProjects.length > 0) {
                 displayCarousel(featuredProjects);
             }
-
-            //for (const file of projectFiles) {
-            //    try {
-            //        const res = await fetch('projects/' + file);
-            //        const proj = await res.json();
-            //        console.log("Loaded project:", proj.title);
-            //        allProjects.push(proj);
-            //        (proj.tags || []).forEach(t => tags.add(t));
-            //    } catch (e) {
-            //        console.error("Error loading:", file, e);
-            //    }
-            //}
         }
-
         function displayCarousel(projects) {
-            const track = document.getElementById('highlightCarousel');
+            const track = document.getElementById('highlightCarouselTrack');
+            // Get the wrapper to determine its visible width
+            const trackWrapper = document.querySelector('.carousel-track-wrapper'); // Added this line
             const visibleCards = 3;
-            const cardWidth = 320; // 300px + 20px margin
+            const cardWidth = 320; // 300px (card) + 20px (margin)
 
             let currentIndex = visibleCards; // Start from first real item
             let clonedProjects = [];
+
 
             function createCard(project, isClone = false) {
                 const card = document.createElement('div');
                 card.className = 'card';
                 if (isClone) card.classList.add('clone');
 
+                // Check for image and description before adding to card
+                const imageUrl = project.image ? project.image : ''; // Fallback for missing image
+                const description = project.description ? project.description : ''; // Fallback for missing description
+
                 card.innerHTML = `
-            <img src="${project.image}" alt="${project.title}">
-            <div class="card-body">
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-            </div>
-        `;
+                        <img src="${imageUrl}" alt="${project.title}">
+                        <div class="card-body">
+                            <h3>${project.title}</h3>
+                            <p>${description}</p>
+                        </div>
+                    `;
+
+                // Add "Play" and "Code" buttons if links exist
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'card-buttons';
+
+                if (project.playLink) {
+                    const playButton = document.createElement('a');
+                    playButton.href = project.playLink;
+                    playButton.target = "_blank";
+                    playButton.textContent = "Play";
+                    buttonsDiv.appendChild(playButton);
+                }
+
+                if (project.codeLink) {
+                    const codeButton = document.createElement('a');
+                    codeButton.href = project.codeLink;
+                    codeButton.target = "_blank";
+                    codeButton.textContent = "Code";
+                    buttonsDiv.appendChild(codeButton);
+                }
+
+                // Append buttons only if there are any
+                if (buttonsDiv.children.length > 0) {
+                    card.appendChild(buttonsDiv);
+                }
 
                 card.addEventListener('click', () => {
                     if (project.detailLink) location.href = project.detailLink;
@@ -328,39 +347,34 @@
             }
 
             function setupCarousel() {
-                // Clear track
                 track.innerHTML = '';
                 clonedProjects = [];
-
                 const total = projects.length;
 
-                // Clone last few items and prepend
                 for (let i = total - visibleCards; i < total; i++) {
                     const clone = createCard(projects[i], true);
                     track.appendChild(clone);
-                    clonedProjects.push(clone);
                 }
 
-                // Real items
                 projects.forEach(p => {
                     const card = createCard(p);
                     track.appendChild(card);
                 });
 
-                // Clone first few items and append
                 for (let i = 0; i < visibleCards; i++) {
                     const clone = createCard(projects[i], true);
                     track.appendChild(clone);
-                    clonedProjects.push(clone);
                 }
 
                 updateCarouselPosition(false);
             }
 
             function updateCarouselPosition(animate = true) {
-                const totalItems = projects.length + visibleCards * 2;
-                const trackWidth = totalItems * cardWidth;
-                const offset = -currentIndex * cardWidth;
+                // Calculate the offset to center the current card
+                const wrapperWidth = trackWrapper.offsetWidth; // Get the actual width of the wrapper
+                const targetCardLeft = currentIndex * cardWidth; // Left edge of the target card relative to the start of the track
+                const centerOffset = (wrapperWidth / 2) - (cardWidth / 2); // How much to shift to center one card
+                const finalOffset = -targetCardLeft + centerOffset; // Combined offset
 
                 if (!animate) {
                     track.style.transition = 'none';
@@ -368,7 +382,7 @@
                     track.style.transition = 'transform 0.5s ease';
                 }
 
-                track.style.transform = `translateX(${offset}px)`;
+                track.style.transform = `translateX(${finalOffset}px)`;
 
                 // Highlight the center card
                 const cards = track.querySelectorAll('.card');
@@ -386,7 +400,6 @@
                 track.addEventListener('transitionend', handleLoop, { once: true });
 
                 function handleLoop() {
-                    // If we moved past the real end/start, reset position instantly
                     if (currentIndex >= total + visibleCards) {
                         currentIndex = visibleCards;
                         updateCarouselPosition(false);
@@ -403,9 +416,6 @@
             setupCarousel();
         }
 
-
-
-
         function display(filterTag) {
             const container = document.getElementById('projectContainer');
             container.innerHTML = '';
@@ -417,19 +427,43 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                      <img src="${p.image}" alt="${p.title}">
-                      <div class="card-body">
-                        <h3>${p.title}</h3>
-                        <p>${p.description}</p>
-                      </div>
-                      <div class="card-buttons">
-                        <a href="${p.playLink}" target="_blank"">Play</a>
-                        <a href="${p.codeLink}" target="_blank">Code</a>
-                      </div>`;
+                        <img src="${p.image}" alt="${p.title}">
+                        <div class="card-body">
+                            <h3>${p.title}</h3>
+                            <p>${p.description}</p>
+                        </div>`;
+
+                // Add "Play" and "Code" buttons if links exist, similar to the carousel
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'card-buttons';
+
+                if (p.playLink) {
+                    const playButton = document.createElement('a');
+                    playButton.href = p.playLink;
+                    playButton.target = "_blank";
+                    playButton.textContent = "Play";
+                    buttonsDiv.appendChild(playButton);
+                }
+
+                if (p.codeLink) {
+                    const codeButton = document.createElement('a');
+                    codeButton.href = p.codeLink;
+                    codeButton.target = "_blank";
+                    codeButton.textContent = "Code";
+                    buttonsDiv.appendChild(codeButton);
+                }
+
+                if (buttonsDiv.children.length > 0) {
+                    card.appendChild(buttonsDiv);
+                }
 
                 // click to go to detail page
                 card.addEventListener('click', () => {
-                    if (p.detailLink) location.href = p.detailLink;
+                    // Only navigate if a detailLink exists AND the click wasn't on a button
+                    // This ensures buttons within the card can be clicked without triggering navigation
+                    if (p.detailLink && !event.target.closest('.card-buttons a')) {
+                        location.href = p.detailLink;
+                    }
                 });
 
                 container.appendChild(card);
