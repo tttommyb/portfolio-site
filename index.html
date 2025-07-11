@@ -296,39 +296,45 @@
             const carousel = document.getElementById('highlightCarousel');
             let currentIndex = 0;
 
-            function render() {
-                carousel.innerHTML = '';
-                featuredProjects.forEach((p, i) => {
-                    const card = document.createElement('div');
-                    card.className = 'card' + (i === currentIndex ? ' active' : '');
-                    card.innerHTML = `
-                <img src="${p.image}" alt="${p.title}">
-                <div class="card-body">
-                    <h3>${p.title}</h3>
-                    <p>${p.description}</p>
-                </div>`;
-                    card.addEventListener('click', () => {
-                        if (p.detailLink) location.href = p.detailLink;
-                    });
-                    carousel.appendChild(card);
+            // Initial render
+            featuredProjects.forEach((p, i) => {
+                const card = document.createElement('div');
+                card.className = 'card' + (i === currentIndex ? ' active' : '');
+                card.innerHTML = `
+            <img src="${p.image}" alt="${p.title}">
+            <div class="card-body">
+                <h3>${p.title}</h3>
+                <p>${p.description}</p>
+            </div>`;
+                card.addEventListener('click', () => {
+                    if (p.detailLink) location.href = p.detailLink;
                 });
+                carousel.appendChild(card);
+            });
 
-                // Scroll to center
-                carousel.children[currentIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            function updateCarousel() {
+                const cards = carousel.children;
+                for (let i = 0; i < cards.length; i++) {
+                    cards[i].classList.remove('active');
+                }
+                cards[currentIndex].classList.add('active');
+                const offset = -currentIndex * 320; // 300px card + 20px gap
+                carousel.style.transform = `translateX(${offset}px)`;
             }
 
             document.getElementById('carousel-prev').onclick = () => {
                 currentIndex = (currentIndex - 1 + featuredProjects.length) % featuredProjects.length;
-                render();
+                updateCarousel();
             };
 
             document.getElementById('carousel-next').onclick = () => {
                 currentIndex = (currentIndex + 1) % featuredProjects.length;
-                render();
+                updateCarousel();
             };
 
-            render();
+            updateCarousel();
         }
+
 
         function display(filterTag) {
             const container = document.getElementById('projectContainer');
