@@ -279,17 +279,17 @@
                 displayCarousel(featuredProjects);
             }
 
-            for (const file of projectFiles) {
-                try {
-                    const res = await fetch('projects/' + file);
-                    const proj = await res.json();
-                    console.log("Loaded project:", proj.title);
-                    allProjects.push(proj);
-                    (proj.tags || []).forEach(t => tags.add(t));
-                } catch (e) {
-                    console.error("Error loading:", file, e);
-                }
-            }
+            //for (const file of projectFiles) {
+            //    try {
+            //        const res = await fetch('projects/' + file);
+            //        const proj = await res.json();
+            //        console.log("Loaded project:", proj.title);
+            //        allProjects.push(proj);
+            //        (proj.tags || []).forEach(t => tags.add(t));
+            //    } catch (e) {
+            //        console.error("Error loading:", file, e);
+            //    }
+            //}
         }
 
         function displayCarousel(featuredProjects) {
