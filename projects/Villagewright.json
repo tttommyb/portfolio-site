@@ -1,0 +1,11 @@
+{
+  "title": "Village Building Puzzle Game",
+  "description": "A short puzzle game that I made for a game jam",
+  "image": "images/whack-a-mole/game.png",
+  "playLink": "https://example.com/play",
+  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "tags": ["Unity", "C#"],
+  "detailLink": "details/villagewright.html",
+  "featured": true
+}
+
