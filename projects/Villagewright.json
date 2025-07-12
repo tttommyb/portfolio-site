@@ -1,10 +1,10 @@
 {
   "title": "Village Building Puzzle Game",
   "description": "A short puzzle game that I made for a game jam",
-  "image": "images/whack-a-mole/game.png",
-  "playLink": "https://example.com/play",
+  "image": "images/villagewright/building.png",
+  "playLink": "https://thomas-bushnell.itch.io/villagewright",
   "codeLink": "https://github.com/yourusername/galactic-defender",
-  "tags": ["Unity", "C#"],
+  "tags": ["Unity", "C#", "Personal Project"],
   "detailLink": "details/villagewright.html",
   "featured": true
 }
