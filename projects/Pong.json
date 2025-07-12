@@ -6,5 +6,5 @@
   "codeLink": "https://github.com/tttommyb/Pong",
   "tags": ["SFML", "C++", "First Year Project"],
   "detailLink": "details/pong.html",
-  "featured": true
+  "featured": false
 }
