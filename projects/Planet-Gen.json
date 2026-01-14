@@ -1,0 +1,11 @@
+{
+  "title": "Procedural OpenGL Planet Generator ",
+  "description": "A procedural planet generator",
+  "image": "images/planet_gen/earthV1.png",
+  "playLink": "https://example.com/play",
+  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "tags": ["OpenGL", "C++", "Personal Project"],
+  "detailLink": "details/planet-gen.html",
+  "featured": true
+}
+
