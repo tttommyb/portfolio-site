@@ -1,7 +1,7 @@
 {
   "title": "Spells and Stuff",
   "description": "A small wizard sandbox game made for a game jam",
-  "image": "images/whack-a-mole/game.png",
+  "image": "images/menu.png",
   "playLink": "https://example.com/play",
   "codeLink": "https://github.com/yourusername/galactic-defender",
   "tags": ["SFML", "C++", "First Year Project"],
