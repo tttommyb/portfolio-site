@@ -12,7 +12,9 @@
   "tags": ["Unity", "C#", "First Year Project", "Maya"],
   "featured": true,
   "media": [
-    { "type": "image", "src": "images/interactive/beach.png", "alt": "Florida Beach Environment" }
+    { "type": "image", "src": "images/interactive/beach.png", "alt": "Florida Beach Environment" },
+    { "type": "video", "src": "videos/interactive/interactive-scene.mp4"
+ }
   ],
   "skills": [
     "Unity",
