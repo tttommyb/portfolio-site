@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Details | Thomas Bushnell</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #121212; color: #f4f4f4; }
+
+    header {
+      background: #1e1e1e;
+      padding: 10px 20px;
+      width: 100%;
+      text-align: center;
+    }
+    header h1 { font-size: 1.5rem; }
+
+    .carousel-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+    .carousel {
+      overflow: hidden;
+      flex: 1;
+      border-radius: 10px;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+    .slides img,
+    .slides video {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .carousel-wrapper button {
+      background: rgba(30,30,30,0.7);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 0 10px;
+      transition: background 0.3s;
+    }
+    .carousel-wrapper button:hover {
+      background: rgba(30,30,30,0.9);
+    }
+
+    .info-box {
+      background: #1e1e1e;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 20px;
+    }
+
+    .info-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .info-buttons a {
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .info-buttons a.btn-play { background: #4caf50; }
+    .info-buttons a.btn-play:hover { background: #43a047; }
+    .info-buttons a.btn-code { background: #2196f3; }
+    .info-buttons a.btn-code:hover { background: #1976d2; }
+
+    .info-header {
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .info-header h2 { font-size: 1.8rem; margin-bottom: 4px; }
+    .info-header time { font-size: 0.9rem; color: #aaa; }
+
+    .section { margin-bottom: 20px; }
+    .section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    .section p,
+    .section ul {
+      line-height: 1.5;
+      margin-left: 10px;
+    }
+    .section p + p { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Thomas Bushnell</h1>
+  </header>
+
+  <button id="backMainBtn" style="
+    background:#333;
+    color:#f4f4f4;
+    border:none;
+    padding:8px 16px;
+    border-radius:5px;
+    cursor:pointer;
+    margin: 20px;
+  ">
+    ← Back
+  </button>
+
+  <div class="carousel-wrapper">
+    <button id="prevBtn">&#10094;</button>
+    <div class="carousel">
+      <div class="slides" id="slides"></div>
+    </div>
+    <button id="nextBtn">&#10095;</button>
+  </div>
+
+  <div class="info-box">
+    <div class="info-header">
+      <h2 id="projectTitle">Loading...</h2>
+      <time id="projectDate"></time>
+      <div class="info-buttons" id="infoButtons"></div>
+    </div>
+
+    <div class="section" id="description">
+      <h3>Description</h3>
+      <div id="projectDescription"></div>
+    </div>
+
+    <div class="section" id="skills">
+      <h3>Skills</h3>
+      <ul id="projectSkills"></ul>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('backMainBtn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    async function loadProjectDetails() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      if (!id) {
+        document.getElementById('projectTitle').textContent = 'Project not found';
+        return;
+      }
+
+      const res = await fetch(`projects/${id}.json`);
+      const proj = await res.json();
+
+      // Title & Date
+      document.title = `${proj.title} | Thomas Bushnell`;
+      document.getElementById('projectTitle').textContent = proj.title;
+      document.getElementById('projectDate').textContent = proj.date || '';
+
+      // Play & Code Buttons
+      const buttonsDiv = document.getElementById('infoButtons');
+      if (proj.playLink) {
+        buttonsDiv.innerHTML += `<a href="${proj.playLink}" class="btn-play" target="_blank">Play</a>`;
+      }
+      if (proj.codeLink) {
+        buttonsDiv.innerHTML += `<a href="${proj.codeLink}" class="btn-code" target="_blank">Code</a>`;
+      }
+
+      // Description (supports an array of paragraphs or a single string)
+      const descDiv = document.getElementById('projectDescription');
+      const paragraphs = Array.isArray(proj.fullDescription)
+        ? proj.fullDescription
+        : [proj.fullDescription || proj.description || ''];
+      descDiv.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+
+      // Skills
+      const skillsUl = document.getElementById('projectSkills');
+      skillsUl.innerHTML = (proj.skills || []).map(s => `<li>${s}</li>`).join('');
+
+      // Carousel Media (falls back to thumbnail image if media array isn't set)
+      const slides = document.getElementById('slides');
+      const mediaItems = (proj.media && proj.media.length > 0)
+        ? proj.media
+        : (proj.image ? [{ type: 'image', src: proj.image, alt: proj.title }] : []);
+
+      mediaItems.forEach(item => {
+        if (item.type === 'video') {
+          const vid = document.createElement('video');
+          vid.src = item.src;
+          vid.autoplay = true;
+          vid.muted = true;
+          vid.loop = true;
+          vid.playsInline = true;
+          vid.controls = true;
+          slides.appendChild(vid);
+        } else {
+          const img = document.createElement('img');
+          img.src = item.src;
+          img.alt = item.alt || proj.title;
+          slides.appendChild(img);
+        }
+      });
+
+      // Carousel Controls
+      const total = slides.children.length;
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let index = 0;
+
+      if (total <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      }
+
+      nextBtn.addEventListener('click', () => {
+        index = (index + 1) % total;
+        slides.style.transform = `translateX(-${index * 100}%)`;
+      });
+
+      prevBtn.addEventListener('click', () => {
+        index = (index - 1 + total) % total;
+        slides.style.transform = `translateX(-${index * 100}%)`;
+      });
+    }
+
+    loadProjectDetails();
+  </script>
+
+</body>
+</html>

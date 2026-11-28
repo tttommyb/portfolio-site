@@ -1,10 +1,26 @@
 {
-  "title": "Platformer",
+  "title": "Platformer - CyberLite City",
+  "date": "May 2025",
   "description": "A side-scrolling platformer made in SFML",
+  "fullDescription": [
+    "This project is a 2D platformer which features 3 unique levels, intelligent enemies, and collectibles for the player."
+  ],
   "image": "images/platformer/level1.png",
-  "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
-  "codeLink": "https://github.com/tttommyb/Pong",
+  "playLink": "",
+  "codeLink": "",
   "tags": ["SFML", "C++", "First Year Project"],
-  "detailLink": "details/platformer.html",
-  "featured": true
+  "featured": true,
+  "media": [
+    { "type": "video", "src": "videos/GIC-Platformer.mp4" },
+    { "type": "image", "src": "images/platformer/menu.png", "alt": "The Main Menu" },
+    { "type": "image", "src": "images/platformer/level1.png", "alt": "Level 1" },
+    { "type": "image", "src": "images/platformer/level2.png", "alt": "Level 2" },
+    { "type": "image", "src": "images/platformer/level3.png", "alt": "Level 3" }
+  ],
+  "skills": [
+    "C++ & SFML for core engine",
+    "Git for version control",
+    "File management for level creation",
+    "Sprite sheet animation"
+  ]
 }

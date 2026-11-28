@@ -1,10 +1,23 @@
 {
-  "title": "Interactive Enivronment",
-  "description": "A small interactive environment crafted in Unity based on a painting by Alfred Hair  ",
+  "title": "Interactive Environment - Florida",
+  "date": "April 2025",
+  "description": "A small interactive environment crafted in Unity based on a painting by Alfred Hair",
+  "fullDescription": [
+    "This project is an interactive environment made in Unity based on a painting by Alfred Hair. The scene is set in Florida, featuring a wetlands area inspired by the Everglades and a calm beach inspired by the Florida Keys.",
+    "As part of the assignment, I modeled 3 different assets in Maya: a crocodile, an openable cooler box, and a flashlight."
+  ],
   "image": "images/interactive/beach.png",
-  "playLink": "https://example.com/play",
-  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "playLink": "",
+  "codeLink": "",
   "tags": ["Unity", "C#", "First Year Project", "Maya"],
-  "detailLink": "details/interactive.html",
-  "featured": true
+  "featured": true,
+  "media": [
+    { "type": "image", "src": "images/interactive/beach.png", "alt": "Florida Beach Environment" }
+  ],
+  "skills": [
+    "Unity",
+    "C#",
+    "Environment Design",
+    "Maya"
+  ]
 }

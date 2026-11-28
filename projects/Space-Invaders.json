@@ -1,10 +1,23 @@
 {
   "title": "Space Invaders!",
+  "date": "March 2025",
   "description": "An SFML remake of the classic Space Invaders",
+  "fullDescription": [
+    "This project is a recreation of Space Invaders which features 4 different movement paths for the aliens driven by mathematical equations, such as sine waves and polynomial curves."
+  ],
   "image": "images/space-invaders/game.png",
-  "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
-  "codeLink": "https://github.com/tttommyb/Pong",
+  "playLink": "",
+  "codeLink": "",
   "tags": ["SFML", "C++", "First Year Project"],
-  "detailLink": "details/space-invaders.html",
-  "featured": false
+  "featured": false,
+  "media": [
+    { "type": "video", "src": "videos/space-invaders/demo.mp4" },
+    { "type": "image", "src": "images/space-invaders/game.png", "alt": "The Game" },
+    { "type": "image", "src": "images/space-invaders/menu.png", "alt": "The Main Menu" }
+  ],
+  "skills": [
+    "C++ & SFML for core engine",
+    "Mathematics for alien movement",
+    "Git for version control"
+  ]
 }

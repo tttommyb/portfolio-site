@@ -1,11 +1,22 @@
 {
-  "title": "Procedural OpenGL Planet Generator ",
-  "description": "A procedural planet generator",
+  "title": "Procedural OpenGL Planet Generator",
+  "date": "January 2026",
+  "description": "A procedural planet generator built in C++ and OpenGL.",
+  "fullDescription": [
+    "A program which generates a planet with different parameters that the user can adjust to create unique worlds. I'm currently working on implementing unique biomes and improved ocean shaders."
+  ],
   "image": "images/planet_gen/earthV1.png",
-  "playLink": "https://example.com/play",
-  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "playLink": "",
+  "codeLink": "https://github.com/tttommyb/PlanetGenerator",
   "tags": ["OpenGL", "C++", "Personal Project"],
-  "detailLink": "details/planet-gen.html",
-  "featured": true
+  "featured": true,
+  "media": [
+    { "type": "image", "src": "images/planet_gen/earthV1.png", "alt": "Procedural Planet Render" }
+  ],
+  "skills": [
+    "C++",
+    "OpenGL 3",
+    "Procedural terrain with FBM noise",
+    "GLSL & custom Vertex and Fragment shaders"
+  ]
 }
-

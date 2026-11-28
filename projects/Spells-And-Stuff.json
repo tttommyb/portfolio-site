@@ -1,10 +1,20 @@
 {
   "title": "Spells and Stuff",
+  "date": "2026",
   "description": "A small wizard sandbox game made for a game jam",
+  "fullDescription": [
+    "A small wizard sandbox game made for a game jam."
+  ],
   "image": "images/menu.png",
-  "playLink": "https://example.com/play",
-  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "playLink": "",
+  "codeLink": "",
   "tags": ["Unity", "C#", "Third Year Project"],
-  "detailLink": "details/spells-and-stuff.html",
-  "featured": false
+  "featured": false,
+  "media": [
+    { "type": "image", "src": "images/menu.png", "alt": "Spells and Stuff Menu" }
+  ],
+  "skills": [
+    "Unity",
+    "C#"
+  ]
 }

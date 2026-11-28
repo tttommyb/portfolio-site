@@ -1,10 +1,24 @@
 {
   "title": "M&M: The Chocolate Chain",
-  "description": "A Local Multiplayer Co-Op based on the M&M brand",
+  "date": "May 2025",
+  "description": "A Local Multiplayer Co-Op puzzle game based on the M&M brand",
+  "fullDescription": [
+    "This was a demo which I developed as part of a group project in which we were tasked with designing a game based on the M&M brand. It is a local multiplayer co-op puzzle game developed in Unity."
+  ],
   "image": "images/mm_cc/thumbnail.png",
-  "playLink": "https://github.com/tttommyb/Pong/releases/tag/V1.0",
-  "codeLink": "https://github.com/tttommyb/Pong",
+  "playLink": "",
+  "codeLink": "",
   "tags": ["Unity", "C#", "First Year Project"],
-  "detailLink": "details/mm_cc.html",
-  "featured": true
+  "featured": true,
+  "media": [
+    { "type": "video", "src": "videos/mm_cc/demo.mp4" },
+    { "type": "video", "src": "videos/mm_cc/swinging.mp4" }
+  ],
+  "skills": [
+    "Implemented local co-op controls using Unity’s Input Manager",
+    "Developed physics-based chain mechanics using Unity’s Physics System",
+    "Programmed core gameplay in C#",
+    "Applied creative problem-solving in game design",
+    "Collaborated effectively in a team environment"
+  ]
 }

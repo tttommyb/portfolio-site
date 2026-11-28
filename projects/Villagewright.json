@@ -1,11 +1,27 @@
 {
-  "title": "Village Building Puzzle Game",
+  "title": "Villagewright - Puzzle Construction Game",
+  "date": "June 2025",
   "description": "A short puzzle game that I made for a game jam",
+  "fullDescription": [
+    "This was a small game I made for a game jam where the player must rebuild destroyed towns from memory."
+  ],
   "image": "images/villagewright/building.png",
   "playLink": "https://thomas-bushnell.itch.io/villagewright",
-  "codeLink": "https://github.com/yourusername/galactic-defender",
+  "codeLink": "",
   "tags": ["Unity", "C#", "Personal Project"],
-  "detailLink": "details/villagewright.html",
-  "featured": true
+  "featured": true,
+  "media": [
+    { "type": "image", "src": "images/villagewright/level1.png", "alt": "Level 1" },
+    { "type": "image", "src": "images/villagewright/destroyed.png", "alt": "Destroyed Village" },
+    { "type": "image", "src": "images/villagewright/building.png", "alt": "Construction" },
+    { "type": "image", "src": "images/villagewright/level2.png", "alt": "Level 2" },
+    { "type": "image", "src": "images/villagewright/level3.png", "alt": "Level 3" },
+    { "type": "image", "src": "images/villagewright/menu.png", "alt": "Main Menu" }
+  ],
+  "skills": [
+    "C#",
+    "Unity",
+    "Puzzle Design",
+    "Time Management"
+  ]
 }
-
