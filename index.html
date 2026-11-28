@@ -254,65 +254,104 @@
     </footer>
 
     <script>
-        // List your JSON files here
-        const projectFiles = ['Spells-And-Stuff.json','Planet-Gen.json', 'Pong.json', 'Platformer.json', 'Space-Invaders.json', 'Co-OpPuzzle.json', 'Interactive.json', 'Villagewright.json']; // Add your project JSON filenames here
-        let allProjects = [];
+            let allProjects = [];
 
-        async function loadProjects() {
-            const container = document.getElementById('projectContainer');
-            const tagSelect = document.getElementById('tagFilter');
-            const tags = new Set();
+            function getGitHubRepoInfo() {
+                const host = window.location.hostname; // e.g. "tttommyb.github.io"
+                const pathParts = window.location.pathname.split('/').filter(Boolean);
 
-            for (const file of projectFiles) {
-                const res = await fetch('projects/' + file);
-                const proj = await res.json();
-                allProjects.push(proj);
-                (proj.tags || []).forEach(t => tags.add(t));
+                if (host.endsWith('.github.io')) {
+                    const user = host.split('.')[0];
+                    // If hosted at user.github.io/RepoName/, the repo is pathParts[0].
+                    // If hosted at the root user.github.io/, the repo is user.github.io.
+                    const repo = (pathParts.length > 0 && !pathParts[0].endsWith('.html'))
+                        ? pathParts[0]
+                        : `${user}.github.io`;
+                    return { user, repo };
+                }
+                return null;
             }
 
-            // build filter dropdown
-            tags.forEach(t => {
-                const o = document.createElement('option');
-                o.value = t; o.textContent = t;
-                tagSelect.appendChild(o);
-            });
-            tagSelect.addEventListener('change', () => display(tagSelect.value));
-            display('all');
+            async function getProjectFileList() {
+                const repoInfo = getGitHubRepoInfo();
 
-            const featuredProjects = allProjects.filter(p => p.featured);
-            if (featuredProjects.length > 0) {
-                displayCarousel(featuredProjects);
+                if (repoInfo) {
+                    try {
+                        const apiUrl = `https://api.github.com/repos/${repoInfo.user}/${repoInfo.repo}/contents/projects`;
+                        const res = await fetch(apiUrl);
+                        if (res.ok) {
+                            const files = await res.json();
+                            return files
+                                .filter(f => f.name.endsWith('.json') && f.name !== 'manifest.json')
+                                .map(f => f.name);
+                        }
+                    } catch (err) {
+                        console.warn('GitHub API fetch failed, using fallback list:', err);
+                    }
+                }
+
+                // Local fallback when testing on your PC before pushing to GitHub
+                return [
+                    'Spells-And-Stuff.json',
+                    'Planet-Gen.json',
+                    'Platformer.json',
+                    'Space-Invaders.json',
+                    'Co-OpPuzzle.json',
+                    'Interactive.json',
+                    'Villagewright.json'
+                ];
             }
-        }
-        function displayCarousel(projects) {
-            const track = document.getElementById('highlightCarouselTrack');
-            // Get the wrapper to determine its visible width
-            const trackWrapper = document.querySelector('.carousel-track-wrapper'); // Added this line
-            const visibleCards = 3;
-            const cardWidth = 320; // 300px (card) + 20px (margin)
 
-            let currentIndex = visibleCards; // Start from first real item
-            let clonedProjects = [];
+            async function loadProjects() {
+                const tagSelect = document.getElementById('tagFilter');
+                const tags = new Set();
+                const projectFiles = await getProjectFileList();
 
+                for (const file of projectFiles) {
+                    try {
+                        const res = await fetch('projects/' + file);
+                        if (!res.ok) continue;
+                        const proj = await res.json();
+                        proj._id = file.replace('.json', '');
+                        allProjects.push(proj);
+                        (proj.tags || []).forEach(t => tags.add(t));
+                    } catch (err) {
+                        console.error(`Error loading ${file}:`, err);
+                    }
+                }
 
-            function createCard(project, isClone = false) {
+                tags.forEach(t => {
+                    const o = document.createElement('option');
+                    o.value = t;
+                    o.textContent = t;
+                    tagSelect.appendChild(o);
+                });
+
+                tagSelect.addEventListener('change', () => display(tagSelect.value));
+                display('all');
+
+                const featuredProjects = allProjects.filter(p => p.featured);
+                if (featuredProjects.length > 0) {
+                    displayCarousel(featuredProjects);
+                }
+            }
+
+            function buildCardElement(project, isClone = false) {
                 const card = document.createElement('div');
                 card.className = 'card';
                 if (isClone) card.classList.add('clone');
 
-                // Check for image and description before adding to card
-                const imageUrl = project.image ? project.image : ''; // Fallback for missing image
-                const description = project.description ? project.description : ''; // Fallback for missing description
+                const imageUrl = project.image || '';
+                const description = project.description || '';
 
                 card.innerHTML = `
-                        <img src="${imageUrl}" alt="${project.title}">
-                        <div class="card-body">
-                            <h3>${project.title}</h3>
-                            <p>${description}</p>
-                        </div>
-                    `;
+                    <img src="${imageUrl}" alt="${project.title}">
+                    <div class="card-body">
+                        <h3>${project.title}</h3>
+                        <p>${description}</p>
+                    </div>
+                `;
 
-                // Add "Play" and "Code" buttons if links exist
                 const buttonsDiv = document.createElement('div');
                 buttonsDiv.className = 'card-buttons';
 
@@ -332,146 +371,93 @@
                     buttonsDiv.appendChild(codeButton);
                 }
 
-                // Append buttons only if there are any
                 if (buttonsDiv.children.length > 0) {
                     card.appendChild(buttonsDiv);
                 }
 
-                card.addEventListener('click', () => {
-                    if (project.detailLink) location.href = project.detailLink;
+                card.addEventListener('click', (event) => {
+                    if (!event.target.closest('.card-buttons a')) {
+                        const targetUrl = project.detailLink || `project.html?id=${encodeURIComponent(project._id)}`;
+                        location.href = targetUrl;
+                    }
                 });
 
                 return card;
             }
 
-            function setupCarousel() {
-                track.innerHTML = '';
-                clonedProjects = [];
-                const total = projects.length;
+            function displayCarousel(projects) {
+                const track = document.getElementById('highlightCarouselTrack');
+                const trackWrapper = document.querySelector('.carousel-track-wrapper');
+                const visibleCards = 3;
+                const cardWidth = 320;
+                let currentIndex = visibleCards;
 
-                for (let i = total - visibleCards; i < total; i++) {
-                    const clone = createCard(projects[i], true);
-                    track.appendChild(clone);
-                }
+                function setupCarousel() {
+                    track.innerHTML = '';
+                    const total = projects.length;
 
-                projects.forEach(p => {
-                    const card = createCard(p);
-                    track.appendChild(card);
-                });
-
-                for (let i = 0; i < visibleCards; i++) {
-                    const clone = createCard(projects[i], true);
-                    track.appendChild(clone);
-                }
-
-                updateCarouselPosition(false);
-            }
-
-            function updateCarouselPosition(animate = true) {
-                // Calculate the offset to center the current card
-                const wrapperWidth = trackWrapper.offsetWidth; // Get the actual width of the wrapper
-                const targetCardLeft = currentIndex * cardWidth; // Left edge of the target card relative to the start of the track
-                const centerOffset = (wrapperWidth / 2) - (cardWidth / 2); // How much to shift to center one card
-                const finalOffset = -targetCardLeft + centerOffset; // Combined offset
-
-                if (!animate) {
-                    track.style.transition = 'none';
-                } else {
-                    track.style.transition = 'transform 0.5s ease';
-                }
-
-                track.style.transform = `translateX(${finalOffset}px)`;
-
-                // Highlight the center card
-                const cards = track.querySelectorAll('.card');
-                cards.forEach(card => card.classList.remove('active'));
-                // The 'active' card should be the one in the middle of the *visible* window.
-                // If visibleCards is 3, the middle card is at index 1 relative to the start of the visible window.
-                // So, the actual index in the `cards` array would be `currentIndex`.
-                const centerCard = cards[currentIndex];
-                if (centerCard) centerCard.classList.add('active');
-            }
-
-            function shiftCarousel(direction) {
-                const total = projects.length;
-
-                currentIndex += direction;
-                updateCarouselPosition(true);
-
-                track.addEventListener('transitionend', handleLoop, { once: true });
-
-                function handleLoop() {
-                    if (currentIndex >= total + visibleCards) {
-                        currentIndex = visibleCards;
-                        updateCarouselPosition(false);
-                    } else if (currentIndex < visibleCards) {
-                        currentIndex = total + visibleCards - 1;
-                        updateCarouselPosition(false);
+                    for (let i = total - visibleCards; i < total; i++) {
+                        track.appendChild(buildCardElement(projects[(i + total) % total], true));
                     }
+                    projects.forEach(p => {
+                        track.appendChild(buildCardElement(p));
+                    });
+                    for (let i = 0; i < visibleCards; i++) {
+                        track.appendChild(buildCardElement(projects[i % total], true));
+                    }
+
+                    updateCarouselPosition(false);
                 }
+
+                function updateCarouselPosition(animate = true) {
+                    const wrapperWidth = trackWrapper.offsetWidth;
+                    const targetCardLeft = currentIndex * cardWidth;
+                    const centerOffset = (wrapperWidth / 2) - (cardWidth / 2);
+                    const finalOffset = -targetCardLeft + centerOffset;
+
+                    track.style.transition = animate ? 'transform 0.5s ease' : 'none';
+                    track.style.transform = `translateX(${finalOffset}px)`;
+
+                    const cards = track.querySelectorAll('.card');
+                    cards.forEach(card => card.classList.remove('active'));
+                    if (cards[currentIndex]) cards[currentIndex].classList.add('active');
+                }
+
+                function shiftCarousel(direction) {
+                    const total = projects.length;
+                    currentIndex += direction;
+                    updateCarouselPosition(true);
+
+                    track.addEventListener('transitionend', () => {
+                        if (currentIndex >= total + visibleCards) {
+                            currentIndex = visibleCards;
+                            updateCarouselPosition(false);
+                        } else if (currentIndex < visibleCards) {
+                            currentIndex = total + visibleCards - 1;
+                            updateCarouselPosition(false);
+                        }
+                    }, { once: true });
+                }
+
+                document.getElementById('carousel-prev').onclick = () => shiftCarousel(-1);
+                document.getElementById('carousel-next').onclick = () => shiftCarousel(1);
+
+                setupCarousel();
             }
 
-            document.getElementById('carousel-prev').onclick = () => shiftCarousel(-1);
-            document.getElementById('carousel-next').onclick = () => shiftCarousel(1);
+            function display(filterTag) {
+                const container = document.getElementById('projectContainer');
+                container.innerHTML = '';
+                const list = filterTag === 'all'
+                    ? allProjects
+                    : allProjects.filter(p => p.tags && p.tags.includes(filterTag));
 
-            setupCarousel();
-        }
-
-        function display(filterTag) {
-            const container = document.getElementById('projectContainer');
-            container.innerHTML = '';
-            const list = filterTag === 'all'
-                ? allProjects
-                : allProjects.filter(p => p.tags && p.tags.includes(filterTag));
-
-            list.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                        <img src="${p.image}" alt="${p.title}">
-                        <div class="card-body">
-                            <h3>${p.title}</h3>
-                            <p>${p.description}</p>
-                        </div>`;
-
-                // Add "Play" and "Code" buttons if links exist, similar to the carousel
-                const buttonsDiv = document.createElement('div');
-                buttonsDiv.className = 'card-buttons';
-
-                if (p.playLink) {
-                    const playButton = document.createElement('a');
-                    playButton.href = p.playLink;
-                    playButton.target = "_blank";
-                    playButton.textContent = "Play";
-                    buttonsDiv.appendChild(playButton);
-                }
-
-                if (p.codeLink) {
-                    const codeButton = document.createElement('a');
-                    codeButton.href = p.codeLink;
-                    codeButton.target = "_blank";
-                    codeButton.textContent = "Code";
-                    buttonsDiv.appendChild(codeButton);
-                }
-
-                if (buttonsDiv.children.length > 0) {
-                    card.appendChild(buttonsDiv);
-                }
-
-                // click to go to detail page
-                card.addEventListener('click', () => {
-                    // Only navigate if a detailLink exists AND the click wasn't on a button
-                    // This ensures buttons within the card can be clicked without triggering navigation
-                    if (p.detailLink && !event.target.closest('.card-buttons a')) {
-                        location.href = p.detailLink;
-                    }
+                list.forEach(p => {
+                    container.appendChild(buildCardElement(p));
                 });
+            }
 
-                container.appendChild(card);
-            });
-        }
-
-        loadProjects();
+            loadProjects();
     </script>
 
 </body>
