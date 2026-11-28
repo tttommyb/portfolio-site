@@ -212,6 +212,18 @@
           img.alt = item.alt || proj.title;
           slides.appendChild(img);
         }
+	// Inside loadProjectDetails() in project.html:
+	if (item.type === 'youtube') {
+ 	 	const iframe = document.createElement('iframe');
+  		iframe.src = item.src;
+  		iframe.style.width = '100%';
+  		iframe.style.aspectRatio = '16 / 9';
+  		iframe.style.border = 'none';
+  		iframe.style.flexShrink = '0';
+  		iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  		iframe.allowFullscreen = true;
+  		slides.appendChild(iframe);
+	}
       });
 
       // Carousel Controls

@@ -13,7 +13,7 @@
   "featured": true,
   "media": [
     { "type": "image", "src": "images/interactive/beach.png", "alt": "Florida Beach Environment" },
-    { "type": "video", "src": "videos/interactive/interactive-scene.mp4"
+    { "type": "youtube", "src": "https://youtu.be/2m_-1hyUmI4"
  }
   ],
   "skills": [
